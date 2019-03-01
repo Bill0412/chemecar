@@ -14,12 +14,12 @@ try:
 		nZero = 0
 		nOne = 0
 		if data == 0:
-			nZero++
+			nZero += 1
 		else:
-			nOne++
+			nOne += 1
 
 		total = nZero + nOne
-		
+
 		if total == 1000:
 			nZero = 0
 			nOne = 0

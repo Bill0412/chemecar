@@ -3,6 +3,7 @@ import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 # singal for starting laser
 GPIO.setup(18, GPIO.OUT)
+GPIO.setup(23, GPIO.IN)
 
 try:
 	while True:

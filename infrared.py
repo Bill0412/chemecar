@@ -5,14 +5,17 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(18, GPIO.OUT)
 GPIO.setup(23, GPIO.IN)
 
+
+
 try:
+	nZero = 0
+	nOne = 0
 	while True:
 		# the infrared light is alsways on
 		GPIO.output(18, GPIO.HIGH)
 
 		data = GPIO.input(23)
-		nZero = 0
-		nOne = 0
+		
 		if data == 0:
 			nZero += 1
 		else:

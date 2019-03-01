@@ -23,7 +23,8 @@ try:
 		if total == 1000:
 			nZero = 0
 			nOne = 0
-		print( "detection rate:" + str(nZero/total), "missing rate: " + str(nOne/total), sep=" ")
+		print("detection rate:" + str(nZero/total), sep=" ")
+		print("missing rate: " + str(nOne/total))
 		
 
 except KeyboardInterrupt: 

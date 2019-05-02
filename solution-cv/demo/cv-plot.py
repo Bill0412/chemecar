@@ -26,7 +26,8 @@ initial_time = time.time()
 isFristTime = True
 isAfterFirstTime = False
 
-THRESHOLD = 0.1
+START_THRESHOLD = 0.2
+END_THRESHOLD = 0.05
 INTERVAL = 1
 
 while cap.isOpened():
@@ -93,13 +94,13 @@ while cap.isOpened():
 
         if isFristTime:
             # if re
-            if area_percent > THRESHOLD:
+            if area_percent > START_THRESHOLD:
                 print('Bottle Detected')
                 isFristTime = False
                 isAfterFirstTime = True
 
         else:
-            if area_percent < THRESHOLD:
+            if area_percent < END_THRESHOLD:
                 print('Reaciton Time: ', time.time() - initial_time)
                 break
 

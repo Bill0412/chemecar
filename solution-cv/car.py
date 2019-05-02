@@ -13,9 +13,13 @@ class Car:
 		self.timer = Timer()
 		self.motor = Motor()
 
-	def loop(self):
+	def start_competition(self):
 		
-		# start the car (when to start?) 
+		
+		# if blue is detected, move the motor, and 
+		timer.wait_solution()
+
+		# start the car
 		motor.move()
 
 		# wait for the timing reaction
@@ -23,3 +27,8 @@ class Car:
 
 		# when the reaction ends, stop the car
 		motor.stop()
+
+
+if __name__ == '__main__':
+	car = Car()
+	car.start_competition()

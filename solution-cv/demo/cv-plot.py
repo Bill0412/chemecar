@@ -35,7 +35,7 @@ while cap.isOpened():
     
     (height, width, channels) = frame.shape
 
-    frame = cv.resize(frame, (int(height / 4), int(width / 4)))
+    frame = cv.resize(frame, (int(height / 2), int(width / 2)))
     
     (height, width, channels) = frame.shape
     
@@ -43,8 +43,8 @@ while cap.isOpened():
     hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
 
     # define range of blue color in HSV
-    lower_blue = np.array([100, 50, 50])
-    upper_blue = np.array([140, 255, 255])
+    lower_blue = np.array([90, 50, 50])
+    upper_blue = np.array([150, 255, 255])
 
     # Threshold the HSV image to get only blue colors
     mask = cv.inRange(hsv, lower_blue, upper_blue)

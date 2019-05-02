@@ -4,6 +4,7 @@
 # by using a 5V voltage controled trigger 
 # connected to the Raspberry Pi
 
+
 from RPi.GPIO import *
 
 class Motor:

@@ -1,3 +1,7 @@
+# This module is used only to test the functionality
+# of the camera and the color change property of the
+# solution.
+
 import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt

@@ -32,8 +32,13 @@ INTERVAL = 1
 while cap.isOpened():
     # Take each frame
     _, frame = cap.read()
-    frame = cv.flip(frame, 1)
+    
+    (height, width, channels) = frame.shape
 
+    frame = cv.resize(frame, (int(height / 4), int(width / 4)))
+    
+    (height, width, channels) = frame.shape
+    
     # Convert BGR to HSV
     hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
 
@@ -56,7 +61,7 @@ while cap.isOpened():
     # filter out the black area
     # for each pixel
     #print(blue_black.shape)
-    (height, width, channels) = blue_black.shape
+    
 
     
     # collect points about every 4 secs considering the computational time
@@ -66,9 +71,10 @@ while cap.isOpened():
         
 
         # find the blue area in the photo
-        h_list = []
+        # h_list = []
         # s_list = []
         # v_list = []
+        h_count = 0
         for i in range(0, height):
             for j in range(0, width):
                 h = blue_black[i, j, 0]
@@ -77,12 +83,12 @@ while cap.isOpened():
                 #print(h, s, v)
                 if h: #not(h == 0 and s == 0 and v == 0):
                                 #if h:
-                    h_list.append(h)
+                    # h_list.append(h)
                     # s_list.append(s)
                     # v_list.append(v)
+                    h_count += 1
 
-
-        area_percent = len(h_list) / (width * height)
+        area_percent = h_count / (width * height)
         print('Area Percentage: ', area_percent)
 
         if isFristTime:

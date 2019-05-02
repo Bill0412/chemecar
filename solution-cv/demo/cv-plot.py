@@ -26,7 +26,8 @@ initial_time = time.time()
 isFristTime = True
 isAfterFirstTime = False
 
-THRESHOLD = 0.1
+START_THRESHOLD = 0.2
+END_THRESHOLD = 0.05
 INTERVAL = 1
 
 while cap.isOpened():
@@ -35,7 +36,7 @@ while cap.isOpened():
     
     (height, width, channels) = frame.shape
 
-    frame = cv.resize(frame, (int(height / 4), int(width / 4)))
+    frame = cv.resize(frame, (int(height / 2), int(width / 2)))
     
     (height, width, channels) = frame.shape
     
@@ -43,8 +44,8 @@ while cap.isOpened():
     hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
 
     # define range of blue color in HSV
-    lower_blue = np.array([100, 50, 50])
-    upper_blue = np.array([140, 255, 255])
+    lower_blue = np.array([90, 50, 50])
+    upper_blue = np.array([150, 255, 255])
 
     # Threshold the HSV image to get only blue colors
     mask = cv.inRange(hsv, lower_blue, upper_blue)
@@ -93,13 +94,13 @@ while cap.isOpened():
 
         if isFristTime:
             # if re
-            if area_percent > THRESHOLD:
+            if area_percent > START_THRESHOLD:
                 print('Bottle Detected')
                 isFristTime = False
                 isAfterFirstTime = True
 
         else:
-            if area_percent < THRESHOLD:
+            if area_percent < END_THRESHOLD:
                 print('Reaciton Time: ', time.time() - initial_time)
                 break
 

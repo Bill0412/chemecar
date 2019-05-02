@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import statistics
 import time
 
-cap = cv.VideoCapture(1)
+cap = cv.VideoCapture(0)
 
 # default value: plot 2s for quick test
 times = 100
@@ -19,10 +19,13 @@ v_mean = []
 
 counter = -1
 initial_time = time.time()
-t = []
 ts = []
 
 area = []
+
+isFristTime = True
+
+THRESHOLD = 0.1
 
 while cap.isOpened():
 	# Take each frame
@@ -54,13 +57,13 @@ while cap.isOpened():
 	(height, width, channels) = blue_black.shape
 
 	
-
+	# collect points about every 4 secs considering the computational time
 	if time.time() - initial_time > counter:
 		counter += 1
 		print(counter)
-		t.append(counter)
-		ts.append(time.time() - initial_time)
+		
 
+		# find the blue area in the photo
 		h_list = []
 		s_list = []
 		v_list = []
@@ -76,20 +79,29 @@ while cap.isOpened():
 					v_list.append(v)
 
 
-		area.append(len(h_list) / (width * height))
+		area_percent = len(h_list) / (width * height)
 
-		#print('h_list', h_list,'s_list', s_list, 'v_list', v_list)
+		if isFristTime:
+			# if re
+			if area_percent > THRESHOLD:
+				initial_time = time.time()
+				isFristTime = False
 
-			# for each blue pixel, find the 
-			# calculate mean(hsv)
-		if (len(h_list) and len(s_list) and len(v_list)):
-			h_mean.append(statistics.mean(h_list))
-			s_mean.append(statistics.mean(s_list))
-			v_mean.append(statistics.mean(v_list))
 		else:
-			h_mean.append(0)
-			s_mean.append(0)
-			v_mean.append(0)
+			ts.append(time.time() - initial_time)
+			area.append(area_percent)
+			#print('h_list', h_list,'s_list', s_list, 'v_list', v_list)
+
+				# for each blue pixel, find the 
+				# calculate mean(hsv)
+			if (len(h_list) and len(s_list) and len(v_list)):
+				h_mean.append(statistics.mean(h_list))
+				s_mean.append(statistics.mean(s_list))
+				v_mean.append(statistics.mean(v_list))
+			else:
+				h_mean.append(0)
+				s_mean.append(0)
+				v_mean.append(0)
 
 	if counter >= times - 1:
 		break

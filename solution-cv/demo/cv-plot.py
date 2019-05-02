@@ -46,11 +46,11 @@ while cap.isOpened():
 
 	# Bitwise-AND mask and original image
 	blue_black = cv.bitwise_and(frame, frame, mask=mask)
-	print(blue_black)
+	# print(blue_black)
 
-	cv.imshow('frame', frame)
+	# cv.imshow('frame', frame)
 	# cv.imshow('mask', mask)
-	cv.imshow('blue black', blue_black)
+	# cv.imshow('blue black', blue_black)
 
 
 	# filter out the black area
@@ -62,13 +62,13 @@ while cap.isOpened():
 	# collect points about every 4 secs considering the computational time
 	if time.time() - initial_time > counter:
 		counter += INTERVAL
-		print(counter)
+		# print(counter)
 		
 
 		# find the blue area in the photo
 		h_list = []
-		s_list = []
-		v_list = []
+		# s_list = []
+		# v_list = []
 		for i in range(0, height):
 			for j in range(0, width):
 				h = blue_black[i, j, 0]
@@ -77,8 +77,8 @@ while cap.isOpened():
 				#print(h, s, v)
 				if not(h == 0 and s == 0 and v == 0):
 					h_list.append(h)
-					s_list.append(s)
-					v_list.append(v)
+					# s_list.append(s)
+					# v_list.append(v)
 
 
 		area_percent = len(h_list) / (width * height)
@@ -91,6 +91,10 @@ while cap.isOpened():
 				isAfterFirstTime = True
 
 		else:
+			if area_percent < THRESHOLD:
+				print('reaciton time: ', time.time() - initial_time)
+				break
+
 			if isAfterFirstTime:
 				initial_time = time.time()
 				isAfterFirstTime = False
@@ -101,14 +105,14 @@ while cap.isOpened():
 
 				# for each blue pixel, find the 
 				# calculate mean(hsv)
-			if (len(h_list) and len(s_list) and len(v_list)):
-				h_mean.append(statistics.mean(h_list))
-				s_mean.append(statistics.mean(s_list))
-				v_mean.append(statistics.mean(v_list))
-			else:
-				h_mean.append(0)
-				s_mean.append(0)
-				v_mean.append(0)
+			# if (len(h_list) and len(s_list) and len(v_list)):
+			# 	h_mean.append(statistics.mean(h_list))
+			# 	s_mean.append(statistics.mean(s_list))
+			# 	v_mean.append(statistics.mean(v_list))
+			# else:
+			# 	h_mean.append(0)
+			# 	s_mean.append(0)
+			# 	v_mean.append(0)
 
 	if counter >= times - 1:
 		break
@@ -118,20 +122,20 @@ while cap.isOpened():
 
 	
 # plot time - mean(hsv)
-plt.figure(1)
-plt.title('time - hsv')
-plt.plot(ts, h_mean, ts, s_mean, ts, v_mean)
-plt.xlabel('time/secs')
-plt.ylabel('color channel tensity')
-plt.legend(['h', 's', 'v'])
+# plt.figure(1)
+# plt.title('time - hsv')
+# plt.plot(ts, h_mean, ts, s_mean, ts, v_mean)
+# plt.xlabel('time/secs')
+# plt.ylabel('color channel tensity')
+# plt.legend(['h', 's', 'v'])
 
 
-plt.figure(2)
-plt.title('hsv - area(percentage)')
-plt.plot(ts, area)
-plt.xlabel('time/secs')
-plt.ylabel('area/percentage')
-plt.show()
+# plt.figure(2)
+# plt.title('hsv - area(percentage)')
+# plt.plot(ts, area)
+# plt.xlabel('time/secs')
+# plt.ylabel('area/percentage')
+# plt.show()
 
 
 

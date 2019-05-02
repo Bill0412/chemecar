@@ -24,8 +24,10 @@ ts = []
 area = []
 
 isFristTime = True
+isAfterFirstTime = False
 
 THRESHOLD = 0.1
+INTERVAL = 0.3
 
 while cap.isOpened():
 	# Take each frame
@@ -59,7 +61,7 @@ while cap.isOpened():
 	
 	# collect points about every 4 secs considering the computational time
 	if time.time() - initial_time > counter:
-		counter += 1
+		counter += INTERVAL
 		print(counter)
 		
 
@@ -84,10 +86,15 @@ while cap.isOpened():
 		if isFristTime:
 			# if re
 			if area_percent > THRESHOLD:
-				initial_time = time.time()
+				
 				isFristTime = False
+				isAfterFirstTime = True
 
 		else:
+			if isAfterFirstTime:
+				initial_time = time.time()
+				isAfterFirstTime = False
+
 			ts.append(time.time() - initial_time)
 			area.append(area_percent)
 			#print('h_list', h_list,'s_list', s_list, 'v_list', v_list)

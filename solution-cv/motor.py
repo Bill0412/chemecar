@@ -8,15 +8,24 @@
 from RPi.GPIO import *
 
 class Motor:
-	def __init__(self):
-		setmode(BCM)
+    def __init__(self):
+        setmode(BCM)
 
-		self.trigger = 15
+        self.trigger = 15
+        self.light = 14
 
-		setup(self.trigger, OUT)
+        setup(self.trigger, OUT)
+        setup(self.light, OUT)
 
-	def move(self):
-		output(self.trigger, HIGH)
+    def light_on(self):
+        output(self.light, HIGH)
+        
+    def light_off(self):
+        output(self.light, LOW)
+        
+    def move(self):
+        output(self.trigger, HIGH)
 
-	def stop(self):
-		output(self.trigger, LOW)
+    def stop(self):
+        output(self.trigger, LOW)
+        cleanup()

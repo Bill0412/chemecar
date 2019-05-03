@@ -32,7 +32,7 @@ $ sudo crontab -e
 
 select the best editor for you and write
 ```
-@reboot nohup python3 /home/pi/Desktop/chemecar/solution-cv/car.py
+@reboot nohup python3 /home/pi/Desktop/chemecar/solution-cv/car.py &
 ```
 
 Next time on Raspberry Pi startup, wait about 1 minute and you will see that the program is automatically initialized.
